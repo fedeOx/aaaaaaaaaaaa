@@ -1,48 +1,24 @@
-reference_jdk: &reference_jdk
-  'JDK="adopt@1.8"'
+language: scala
+
+jdk:
+  - openjdk8
+  - oraclejdk11
+  - openjdk11
+
+scala:
+  - 2.12.9
   
-reference_build: &reference_build
-  os: linux
-  env: *reference_jdk
-
-language: minimal
-
 os:
+  - linux
   - osx
-  - windows
-  - *reference_os
 
-env:
-  global:
-    # Convenience variables for shortening commands
-    - GRAVIS_REPO="https://github.com/DanySK/Gravis-CI.git"
-    - GRAVIS="$HOME/gravis"
-    
-before_install:
-    - travis_retry git clone --depth 1 $GRAVIS_REPO $GRAVIS
-    - source $GRAVIS/install-jdk
-    
-before_cache:
-  - $GRAVIS/clean-gradle-cache
-  
-cache:
-  directories:
-    - $HOME/.gradle/caches/
-    - $HOME/.gradle/wrapper/
+install: true
 
 script:
   - java -version
-  - sbt test
+  - sbt ++$TRAVIS_SCALA_VERSION test
 
 branches:
   only:
     - master
     - develop
-    
-notifications:
-  email:
-    on_success: never
-    recipients:
-      - federico.orazi@studio.unibo.it
-      - maichol.dadi@studio.unibo.it
-      - lorenzo.simoncini2@studio.unibo.it
