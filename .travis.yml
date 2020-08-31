@@ -19,7 +19,6 @@ env:
     - GRAVIS="$HOME/gravis"
     
 before_install:
-    - chmod +x gradlew
     - travis_retry git clone --depth 1 $GRAVIS_REPO $GRAVIS
     - source $GRAVIS/install-jdk
     
@@ -30,11 +29,6 @@ cache:
   directories:
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
-
-scala:
-  - 2.12.9
-
-install: true
 
 script:
   - java -version
